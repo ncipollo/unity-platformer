@@ -113,6 +113,25 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &253651261 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1697422542981944, guid: 332ee082774ab488684c8dfb35cf9729,
+    type: 2}
+  m_PrefabInternal: {fileID: 265057118}
+--- !u!114 &253651262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 253651261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2228f2a489a48449eb427cdc3ed1fc1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerId: P1
+  walkForce: 350
+  maxWalkSpeed: 50
 --- !u!1001 &265057118
 Prefab:
   m_ObjectHideFlags: 0
@@ -167,7 +186,7 @@ GameObject:
   - component: {fileID: 653946547}
   - component: {fileID: 653946551}
   - component: {fileID: 653946548}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Test Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

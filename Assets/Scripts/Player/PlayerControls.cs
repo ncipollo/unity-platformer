@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// Provides Input control strings based upon the supplied player ID.
+// Provides Input control strings based upon the supplied player ID.
 public class PlayerControls {
     public string Horizontal { get; }
 	public string Jump { get; }
