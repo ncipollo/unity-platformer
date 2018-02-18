@@ -10,7 +10,7 @@ public class PlayerControlsTest {
 
 	[SetUp]
 	public void SetUp() {
-		playerControls = new PlayerControls("_P1");
+		playerControls = new PlayerControls("P1");
 	}
 
 	[Test]

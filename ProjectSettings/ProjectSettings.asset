@@ -632,7 +632,7 @@ PlayerSettings:
   cloudServicesEnabled:
     UNet: 1
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 2
+  apiCompatibilityLevel: 3
   cloudProjectId: 5a7f4516-d6a9-4df0-aa57-92bc34b4ebbd
   projectName: controversial-platformer
   organizationId: njc1115
