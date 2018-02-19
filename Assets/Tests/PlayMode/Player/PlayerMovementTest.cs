@@ -82,12 +82,13 @@ public class PlayerMovementTest {
 
     [UnityTest]
     public IEnumerator Walk_SetsAnimationToWalk() {
-        playerMovement.CheckHorizontalAxis(1f);
+        playerMovement.CheckHorizontalAxis(-2f);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
 
-        playerAnimator
-		.Received()
+        playerAnimator.Received()
         .UpdateAnimationState(PlayerAnimationState.WALKING);
+
+        playerAnimator.Received().UpdateAnimationSpeed(2.0f);
     }
 }

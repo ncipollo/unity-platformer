@@ -73,8 +73,10 @@ public class PlayerMovement {
 	void UpdateAnimation() {
 		if(Mathf.Abs(controlsDx) > 0) {
 			playerAnimator.UpdateAnimationState(PlayerAnimationState.WALKING);
+            playerAnimator.UpdateAnimationSpeed(Mathf.Abs(controlsDx));
 		} else {
             playerAnimator.UpdateAnimationState(PlayerAnimationState.IDLE);
+            playerAnimator.UpdateAnimationSpeed(1f);
         }
 	}
 }

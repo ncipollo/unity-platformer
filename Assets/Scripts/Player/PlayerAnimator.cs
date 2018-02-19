@@ -11,10 +11,14 @@ public class PlayerAnimator : IPlayerAnimator {
         this.animator = animator;
     }
 
+    public void UpdateAnimationSpeed(float speed) {
+        animator.SetFloat("Speed", speed);
+    }
+
     public void UpdateAnimationState(PlayerAnimationState animationState) {
         if (this.animationState != animationState) {
-			this.animationState = animationState;
-			animator.SetTrigger(animationState.ToTrigger());
+            this.animationState = animationState;
+            animator.SetTrigger(animationState.ToTrigger());
         }
     }
 }
