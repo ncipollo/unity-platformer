@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
         playerMovement = new PlayerMovement(
             playerAnimator: playerAnimator,
             playerRigidBody: rigidBody,
-			playerTransform: transform,
+            playerTransform: transform,
             walkForce: walkForce,
             maxWalkSpeed: maxWalkSpeed
             );

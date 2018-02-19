@@ -23,8 +23,8 @@ public static class PlayerAnimationStateExtentions {
                 return "dash";
             default:
                 throw new ArgumentException(
-					$"Unhandled state: {state.ToString()}"
-					);
+                    $"Unhandled state: {state.ToString()}"
+                    );
         }
     }
 }
