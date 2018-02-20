@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    public Transform groundCheck;
     public string playerId = "P1";
-    public float walkForce = 350;
-    public float maxWalkSpeed = 50f;
+    public PlayerMotionConstants motionConstants = new PlayerMotionConstants(
+        walkForce: 350,
+        maxWalkSpeed: 50,
+        jumpForce: 500,
+        dashForce: 500
+    );
 
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -29,10 +34,10 @@ public class PlayerController : MonoBehaviour {
         playerControls = new PlayerControls(playerId);
         playerMovement = new PlayerMovement(
             playerAnimator: playerAnimator,
+            playerGroundCheck: groundCheck,
             playerRigidBody: rigidBody,
             playerTransform: transform,
-            walkForce: walkForce,
-            maxWalkSpeed: maxWalkSpeed
+            motionConstants: motionConstants
             );
     }
 

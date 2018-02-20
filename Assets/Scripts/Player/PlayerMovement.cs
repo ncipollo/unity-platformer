@@ -4,28 +4,41 @@ using UnityEngine;
 
 public class PlayerMovement {
     private IPlayerAnimator playerAnimator;
+    private Transform playerGroundCheck;
     private Rigidbody2D playerRigidBody;
     private Transform playerTransform;
-    private float walkForce;
-    private float maxWalkSpeed;
-
+    private PlayerMotionConstants motionConstants;
     private float controlsDx;
     private bool facingRight = true;
+    private bool grounded = false;
+    private bool shouldJump = false;
 
-    public PlayerMovement(IPlayerAnimator playerAnimator,
-    Rigidbody2D playerRigidBody,
-    Transform playerTransform,
-    float walkForce,
-    float maxWalkSpeed) {
+    public PlayerMovement(
+        IPlayerAnimator playerAnimator,
+        Transform playerGroundCheck,
+        Rigidbody2D playerRigidBody,
+        Transform playerTransform,
+        PlayerMotionConstants motionConstants) {
         this.playerAnimator = playerAnimator;
+        this.playerGroundCheck = playerGroundCheck;
         this.playerRigidBody = playerRigidBody;
         this.playerTransform = playerTransform;
-        this.walkForce = walkForce;
-        this.maxWalkSpeed = maxWalkSpeed;
+        this.motionConstants = motionConstants;
     }
 
     public void CheckJump(bool jumpButton) {
+        var height = playerGroundCheck.localScale.y;
+        var groundCheckTop = playerGroundCheck.position.y + (height / 2f);
+        var origin = new Vector2(playerGroundCheck.position.x, groundCheckTop);
+        grounded = Physics2D.BoxCast(
+            origin: origin,
+            size: playerGroundCheck.localScale,
+            angle: 0,
+            direction: new Vector2(0, -1),
+            distance: height,
+            layerMask: 1 << LayerMask.NameToLayer("Ground"));
 
+        shouldJump = jumpButton && grounded;
     }
 
     public void CheckHorizontalAxis(float dx) {
@@ -33,16 +46,16 @@ public class PlayerMovement {
     }
 
     public void Update() {
+        UpdateOrientation();
         UpdateWalk();
+        UpdateJump();
+
         UpdateAnimation();
     }
 
     void UpdateWalk() {
-        ApplyWalkForce();
-        CheckForFlip();
-    }
-
-    void ApplyWalkForce() {
+        float maxWalkSpeed = motionConstants.maxWalkSpeed;
+        float walkForce = motionConstants.walkForce;
         if (controlsDx * playerRigidBody.velocity.x < maxWalkSpeed) {
             playerRigidBody.AddForce(Vector2.right * controlsDx * walkForce);
         }
@@ -55,7 +68,7 @@ public class PlayerMovement {
         }
     }
 
-    void CheckForFlip() {
+    void UpdateOrientation() {
         if (controlsDx > 0 && !facingRight) {
             Flip();
         } else if (controlsDx < 0 && facingRight) {
@@ -70,8 +83,20 @@ public class PlayerMovement {
         playerTransform.localScale = localScale;
     }
 
+    void UpdateJump() {
+        if (shouldJump) {
+            playerRigidBody.AddForce(
+                new Vector2(0f, motionConstants.jumpForce)
+                );
+            shouldJump = false;
+        }
+    }
+
     void UpdateAnimation() {
-        if (Mathf.Abs(controlsDx) > 0) {
+        if (!grounded) {
+            playerAnimator.UpdateAnimationState(PlayerAnimationState.JUMPING);
+            playerAnimator.UpdateAnimationSpeed(1f);
+        } else if (Mathf.Abs(controlsDx) > 0) {
             playerAnimator.UpdateAnimationState(PlayerAnimationState.WALKING);
             playerAnimator.UpdateAnimationSpeed(Mathf.Abs(controlsDx));
         } else {
