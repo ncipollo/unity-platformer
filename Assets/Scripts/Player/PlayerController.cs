@@ -6,12 +6,7 @@ public class PlayerController : MonoBehaviour {
 
     public Transform groundCheck;
     public string playerId = "P1";
-    public PlayerMotionConstants motionConstants = new PlayerMotionConstants(
-        walkForce: 350,
-        maxWalkSpeed: 50,
-        jumpForce: 500,
-        dashForce: 500
-    );
+    public PlayerMotionConstants motionConstants = new PlayerMotionConstants();
 
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -42,8 +37,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update() {
-        var jump = Input.GetButtonDown(playerControls.Jump);
-
+        var jump = Input.GetAxis(playerControls.Jump) >= 1.0f;
         playerMovement.CheckJump(jump);
     }
 

@@ -7,12 +7,7 @@ using NSubstitute;
 public class PlayerMovementTest {
     private const float PLATFORM_Y_OFFSET = 1;
 
-    private PlayerMotionConstants motionConstants = new PlayerMotionConstants(
-        walkForce: 1,
-        maxWalkSpeed: 1,
-        jumpForce: 1000,
-        dashForce: 1
-    );
+    private PlayerMotionConstants motionConstants = new PlayerMotionConstants();
 
     private GameObject groundCheckGameObject;
     private GameObject platformGameObject;
