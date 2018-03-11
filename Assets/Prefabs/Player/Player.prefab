@@ -128,7 +128,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -191,10 +191,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 4338056696059204}
   playerId: P1
-  walkForce: 350
-  maxWalkSpeed: 50
-  jumpForce: 500
-  dashForce: 5000
+  motionConstants:
+    walkForce: 350
+    maxWalkSpeed: 50
+    dashForce: 500
+    jumpSpeed: 15
+    jumpTime: 0.5
+    maxJumps: 1
 --- !u!212 &212326314113951128
 SpriteRenderer:
   m_ObjectHideFlags: 1

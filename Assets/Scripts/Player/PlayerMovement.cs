@@ -11,7 +11,7 @@ public class PlayerMovement {
     private float controlsDx;
     private bool facingRight = true;
     private bool grounded = false;
-    private bool shouldJump = false;
+    private PlayerJump playerJump;
 
     public PlayerMovement(
         IPlayerAnimator playerAnimator,
@@ -24,6 +24,8 @@ public class PlayerMovement {
         this.playerRigidBody = playerRigidBody;
         this.playerTransform = playerTransform;
         this.motionConstants = motionConstants;
+
+        playerJump = new PlayerJump(motionConstants);
     }
 
     public void CheckJump(bool jumpButton) {
@@ -38,7 +40,7 @@ public class PlayerMovement {
             distance: height,
             layerMask: 1 << LayerMask.NameToLayer("Ground"));
 
-        shouldJump = jumpButton && grounded;
+        playerJump.Update(grounded, jumpButton);
     }
 
     public void CheckHorizontalAxis(float dx) {
@@ -84,12 +86,11 @@ public class PlayerMovement {
     }
 
     void UpdateJump() {
-        if (shouldJump) {
-            playerRigidBody.AddForce(
-                new Vector2(0f, motionConstants.jumpForce)
-                );
-            shouldJump = false;
-        }
+        var velocity = playerRigidBody.velocity;
+        playerRigidBody.velocity = playerJump.ApplyVelocity(
+            initial: velocity,
+            deltaTime: Time.deltaTime
+            );
     }
 
     void UpdateAnimation() {
