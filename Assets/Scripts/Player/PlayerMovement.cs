@@ -12,6 +12,7 @@ public class PlayerMovement {
     private bool facingRight = true;
     private bool grounded = false;
     private PlayerJump playerJump;
+    private PlayerDash playerDash;
 
     public PlayerMovement(
         IPlayerAnimator playerAnimator,
@@ -26,9 +27,10 @@ public class PlayerMovement {
         this.motionConstants = motionConstants;
 
         playerJump = new PlayerJump(motionConstants);
+        playerDash = new PlayerDash(motionConstants);
     }
 
-    public void CheckJump(bool jumpButton) {
+    public void CheckGrounded() {
         var height = playerGroundCheck.localScale.y;
         var groundCheckTop = playerGroundCheck.position.y + (height / 2f);
         var origin = new Vector2(playerGroundCheck.position.x, groundCheckTop);
@@ -39,7 +41,16 @@ public class PlayerMovement {
             direction: new Vector2(0, -1),
             distance: height,
             layerMask: 1 << LayerMask.NameToLayer("Ground"));
+    }
 
+    public void CheckDash(bool dashButton, float deltaTime) {
+        playerDash.CheckDash(grounded: grounded,
+        dashButton: dashButton,
+        facingRight: facingRight,
+        deltaTime: deltaTime);
+    }
+
+    public void CheckJump(bool jumpButton) {
         playerJump.Update(grounded, jumpButton);
     }
 
@@ -49,32 +60,35 @@ public class PlayerMovement {
 
     public void Update() {
         UpdateOrientation();
-        UpdateWalk();
         UpdateJump();
+        UpdateDash();
+        UpdateWalk();
+        ApplyMaxSpeed();
 
         UpdateAnimation();
     }
 
-    void UpdateWalk() {
-        float maxWalkSpeed = motionConstants.maxWalkSpeed;
-        float walkForce = motionConstants.walkForce;
-        if (controlsDx * playerRigidBody.velocity.x < maxWalkSpeed) {
-            playerRigidBody.AddForce(Vector2.right * controlsDx * walkForce);
-        }
-
-        if (Mathf.Abs(playerRigidBody.velocity.x) > maxWalkSpeed) {
-            playerRigidBody.velocity = new Vector2(
-                Mathf.Sign(playerRigidBody.velocity.x) * maxWalkSpeed,
-                playerRigidBody.velocity.y
-                );
-        }
-    }
-
     void UpdateOrientation() {
+        if(playerDash.isDashing) {
+            return;
+        }
+        
         if (controlsDx > 0 && !facingRight) {
             Flip();
         } else if (controlsDx < 0 && facingRight) {
             Flip();
+        }
+    }
+
+    void UpdateWalk() {
+        if(playerDash.isDashing) {
+            return;
+        }
+
+        float maxWalkSpeed = motionConstants.walkMaxSpeed;
+        float walkForce = motionConstants.walkForce;
+        if (controlsDx * playerRigidBody.velocity.x < maxWalkSpeed) {
+            playerRigidBody.AddForce(Vector2.right * controlsDx * walkForce);
         }
     }
 
@@ -91,6 +105,28 @@ public class PlayerMovement {
             initial: velocity,
             deltaTime: Time.deltaTime
             );
+    }
+
+    void UpdateDash() {
+        if(playerDash.ShouldApplyForce(playerRigidBody.velocity)) {
+            playerRigidBody.AddForce(playerDash.Force);
+        }
+    }
+
+    void ApplyMaxSpeed() {
+        float limit;
+        if(playerDash.isDashing) {
+            limit = motionConstants.dashMaxSpeed;
+        } else {
+            limit = motionConstants.walkMaxSpeed;;
+        }
+
+        if (Mathf.Abs(playerRigidBody.velocity.x) > limit) {
+            playerRigidBody.velocity = new Vector2(
+                Mathf.Sign(playerRigidBody.velocity.x) * limit,
+                playerRigidBody.velocity.y
+                );
+        }
     }
 
     void UpdateAnimation() {

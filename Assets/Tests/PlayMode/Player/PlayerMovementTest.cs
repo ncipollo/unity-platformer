@@ -38,8 +38,8 @@ public class PlayerMovementTest {
 
     void SetupGroundCheckGameObject() {
         groundCheckGameObject = new GameObject("Ground Check");
-        groundCheckGameObject.transform.localScale = new Vector2(1,1);
-            
+        groundCheckGameObject.transform.localScale = new Vector2(1, 1);
+
         groundCheckGameObject.transform.SetParent(playerGameObject.transform);
     }
 
@@ -70,11 +70,13 @@ public class PlayerMovementTest {
 
     [UnityTest]
     public IEnumerator Animation_Jumping() {
+        playerMovement.CheckGrounded();
         playerMovement.CheckJump(true);
         playerMovement.Update();
         yield return new WaitUntil(
                 () => playerGameObject.transform.position.y > 2
             );
+        playerMovement.CheckGrounded();
         playerMovement.CheckJump(false);
         playerMovement.Update();
 
@@ -86,6 +88,7 @@ public class PlayerMovementTest {
     [UnityTest]
     public IEnumerator Animation_Jumping_WhenFalling() {
         MovePlatformAwayFromPlayer();
+        playerMovement.CheckGrounded();
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
 
@@ -101,6 +104,7 @@ public class PlayerMovementTest {
     [UnityTest]
     public IEnumerator Animation_Walking() {
         playerMovement.CheckHorizontalAxis(-2f);
+        playerMovement.CheckGrounded();
         playerMovement.CheckJump(false);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
@@ -111,8 +115,30 @@ public class PlayerMovementTest {
     }
 
     [UnityTest]
+    public IEnumerator Dashing_InMidAir() {
+        MovePlatformAwayFromPlayer();
+        playerMovement.CheckGrounded();
+        playerMovement.CheckDash(true, 0);
+        playerMovement.Update();
+        yield return new WaitForFixedUpdate();
+
+        Assert.AreEqual(0, playerGameObject.transform.position.x);
+    }
+
+    [UnityTest]
+    public IEnumerator Dashing_OnPlatform() {
+        playerMovement.CheckGrounded();
+        playerMovement.CheckDash(true, 0);
+        playerMovement.Update();
+        yield return new WaitForFixedUpdate();
+
+        Assert.Greater(playerGameObject.transform.position.x, 0);
+    }
+
+    [UnityTest]
     public IEnumerator Jumping_InMidAir() {
         MovePlatformAwayFromPlayer();
+        playerMovement.CheckGrounded();
         playerMovement.CheckJump(true);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
@@ -122,6 +148,7 @@ public class PlayerMovementTest {
 
     [UnityTest]
     public IEnumerator Jumping_OnPlatform() {
+        playerMovement.CheckGrounded();
         playerMovement.CheckJump(true);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
@@ -131,9 +158,11 @@ public class PlayerMovementTest {
 
     [UnityTest]
     public IEnumerator Walking_Flip_StartingLeft() {
+        playerMovement.CheckGrounded();
         playerMovement.CheckHorizontalAxis(-1f);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
+        playerMovement.CheckGrounded();
         playerMovement.CheckHorizontalAxis(1f);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
@@ -143,6 +172,7 @@ public class PlayerMovementTest {
 
     [UnityTest]
     public IEnumerator Walking_Flip_StartingRight() {
+        playerMovement.CheckGrounded();
         playerMovement.CheckHorizontalAxis(-1f);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
@@ -152,6 +182,7 @@ public class PlayerMovementTest {
 
     [UnityTest]
     public IEnumerator Walking_MovesRight() {
+        playerMovement.CheckGrounded();
         playerMovement.CheckHorizontalAxis(1f);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();
@@ -161,6 +192,7 @@ public class PlayerMovementTest {
 
     [UnityTest]
     public IEnumerator Walking_MovesLeft() {
+        playerMovement.CheckGrounded();
         playerMovement.CheckHorizontalAxis(-1f);
         playerMovement.Update();
         yield return new WaitForFixedUpdate();

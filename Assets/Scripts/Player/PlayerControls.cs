@@ -8,11 +8,13 @@ public class PlayerControls {
     public string Jump { get; }
     public string Fire1 { get; }
     public string Fire2 { get; }
+    public string Fire3 { get; }
 
     public PlayerControls(string playerID) {
         Horizontal = $"Horizontal_{playerID}";
         Jump = $"Jump_{playerID}";
         Fire1 = $"Fire1_{playerID}";
         Fire2 = $"Fire2_{playerID}";
+        Fire3 = $"Fire3_{playerID}";
     }
 }

@@ -32,4 +32,9 @@ public class PlayerControlsTest {
     public void Fire2() {
         Assert.AreEqual("Fire2_P1", playerControls.Fire2);
     }
+
+    [Test]
+    public void Fire3() {
+        Assert.AreEqual("Fire3_P1", playerControls.Fire3);
+    }
 }
