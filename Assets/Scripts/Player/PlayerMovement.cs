@@ -130,7 +130,10 @@ public class PlayerMovement {
     }
 
     void UpdateAnimation() {
-        if (!grounded) {
+        if (playerDash.isDashing) {
+            playerAnimator.UpdateAnimationState(PlayerAnimationState.DASHING);
+            playerAnimator.UpdateAnimationSpeed(1f);
+        } else if (!grounded) {
             playerAnimator.UpdateAnimationState(PlayerAnimationState.JUMPING);
             playerAnimator.UpdateAnimationSpeed(1f);
         } else if (Mathf.Abs(controlsDx) > 0) {

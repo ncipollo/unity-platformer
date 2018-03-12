@@ -69,6 +69,18 @@ public class PlayerMovementTest {
     }
 
     [UnityTest]
+    public IEnumerator Animation_Dashing() {
+        playerMovement.CheckGrounded();
+        playerMovement.CheckDash(true, 0f);
+        playerMovement.Update();
+        yield return new WaitForFixedUpdate();
+
+        playerAnimator.Received()
+            .UpdateAnimationState(PlayerAnimationState.DASHING);
+        playerAnimator.Received().UpdateAnimationSpeed(1.0f);
+    }
+
+    [UnityTest]
     public IEnumerator Animation_Jumping() {
         playerMovement.CheckGrounded();
         playerMovement.CheckJump(true);
