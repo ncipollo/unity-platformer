@@ -134,7 +134,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &61813260865858316
 BoxCollider2D:
@@ -193,8 +193,11 @@ MonoBehaviour:
   playerId: P1
   motionConstants:
     walkForce: 350
-    maxWalkSpeed: 50
+    walkMaxSpeed: 50
     dashForce: 500
+    dashDuration: 0.5
+    dashCoolDown: 0.25
+    dashMaxSpeed: 200
     jumpSpeed: 15
     jumpTime: 0.5
     maxJumps: 1
