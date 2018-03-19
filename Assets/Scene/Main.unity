@@ -176,16 +176,6 @@ Prefab:
       propertyPath: m_GravityScale
       value: 1.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114120535738338032, guid: 332ee082774ab488684c8dfb35cf9729,
-        type: 2}
-      propertyPath: motionConstants.maxJumps
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114120535738338032, guid: 332ee082774ab488684c8dfb35cf9729,
-        type: 2}
-      propertyPath: motionConstants.jumpSpeed
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 332ee082774ab488684c8dfb35cf9729, type: 2}
   m_IsPrefabParent: 0

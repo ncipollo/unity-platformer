@@ -198,7 +198,7 @@ MonoBehaviour:
     dashDuration: 0.5
     dashCoolDown: 0.25
     dashMaxSpeed: 200
-    jumpSpeed: 15
+    jumpSpeed: 10
     jumpTime: 0.5
     maxJumps: 1
 --- !u!212 &212326314113951128
