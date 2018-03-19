@@ -194,10 +194,10 @@ MonoBehaviour:
   motionConstants:
     walkForce: 350
     walkMaxSpeed: 50
-    dashForce: 500
+    dashForce: 800
     dashDuration: 0.5
     dashCoolDown: 0.25
-    dashMaxSpeed: 200
+    dashMaxSpeed: 300
     jumpSpeed: 10
     jumpTime: 0.5
     maxJumps: 1

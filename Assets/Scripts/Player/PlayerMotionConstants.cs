@@ -15,10 +15,10 @@ public class PlayerMotionConstants : System.Object {
     public PlayerMotionConstants(
         float walkForce = 350,
         float maxWalkSpeed = 50,
-        float dashForce = 500,
+        float dashForce = 800,
         float dashDuration = .5f,
         float dashCoolDown = .25f,
-        float dashMaxSpeed = 200,
+        float dashMaxSpeed = 300,
         float jumpSpeed = 10,
         float jumpTime = .5f,
         int maxJumps = 1
