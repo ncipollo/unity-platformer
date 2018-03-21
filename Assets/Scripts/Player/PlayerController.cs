@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-
     public Transform groundCheck;
-    public string playerId = "P1";
     public PlayerMotionConstants motionConstants = new PlayerMotionConstants();
+    public PlayerEffects playerEffects = new PlayerEffects();
+    public string playerId = "P1";
 
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -29,11 +29,12 @@ public class PlayerController : MonoBehaviour {
         playerControls = new PlayerControls(playerId);
         playerMovement = new PlayerMovement(
             playerAnimator: playerAnimator,
+            playerEffects: playerEffects,
             playerGroundCheck: groundCheck,
             playerRigidBody: rigidBody,
             playerTransform: transform,
             motionConstants: motionConstants
-            );
+        );
     }
 
     void Update() {

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement {
     private IPlayerAnimator playerAnimator;
+    private IPlayerEffects playerEffects;
     private Transform playerGroundCheck;
     private Rigidbody2D playerRigidBody;
     private Transform playerTransform;
@@ -16,18 +17,20 @@ public class PlayerMovement {
 
     public PlayerMovement(
         IPlayerAnimator playerAnimator,
+        IPlayerEffects playerEffects,
         Transform playerGroundCheck,
         Rigidbody2D playerRigidBody,
         Transform playerTransform,
         PlayerMotionConstants motionConstants) {
         this.playerAnimator = playerAnimator;
+        this.playerEffects = playerEffects;
         this.playerGroundCheck = playerGroundCheck;
         this.playerRigidBody = playerRigidBody;
         this.playerTransform = playerTransform;
         this.motionConstants = motionConstants;
 
         playerJump = new PlayerJump(motionConstants);
-        playerDash = new PlayerDash(motionConstants);
+        playerDash = new PlayerDash(motionConstants, playerEffects);
     }
 
     public void CheckGrounded() {
@@ -65,6 +68,7 @@ public class PlayerMovement {
         UpdateWalk();
         ApplyMaxSpeed();
 
+        UpdateEffects();
         UpdateAnimation();
     }
 
@@ -127,6 +131,10 @@ public class PlayerMovement {
                 playerRigidBody.velocity.y
                 );
         }
+    }
+
+    void UpdateEffects() {
+        playerEffects.SetDirection(facingRight);
     }
 
     void UpdateAnimation() {

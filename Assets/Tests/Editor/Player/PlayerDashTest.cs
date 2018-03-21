@@ -10,7 +10,8 @@ public class PlayerDashTest {
         new PlayerDashRobot()
         .DashLeft()
         .AssertShouldApplyForceAtRest()
-        .AssertDashingLeft();
+        .AssertDashingLeft()
+        .AssertDashEffectCreated();
     }
 
     [Test]
@@ -18,7 +19,8 @@ public class PlayerDashTest {
         new PlayerDashRobot()
         .DashRight()
         .AssertShouldApplyForceAtRest()
-        .AssertDashingRight();
+        .AssertDashingRight()
+        .AssertDashEffectCreated();
     }
 
     [Test]

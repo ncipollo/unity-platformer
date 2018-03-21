@@ -15,10 +15,12 @@ public class PlayerMovementTest {
     private PlayerMovement playerMovement;
     private Rigidbody2D rigidbody2D;
     private IPlayerAnimator playerAnimator;
+    private IPlayerEffects playerEffects;
 
     [SetUp]
     public void SetUp() {
         SetupAnimtor();
+        SetupEffects();
         SetupPlayerGameObject();
         SetupGroundCheckGameObject();
         SetupPlatformGameObject();
@@ -34,6 +36,10 @@ public class PlayerMovementTest {
 
     void SetupAnimtor() {
         playerAnimator = Substitute.For<IPlayerAnimator>();
+    }
+
+    void SetupEffects() {
+        playerEffects = Substitute.For<IPlayerEffects>();
     }
 
     void SetupGroundCheckGameObject() {
@@ -62,10 +68,12 @@ public class PlayerMovementTest {
     void SetupPlayerMovement() {
         playerMovement = new PlayerMovement(
             playerAnimator: playerAnimator,
+            playerEffects: playerEffects,
             playerGroundCheck: groundCheckGameObject.transform,
             playerRigidBody: rigidbody2D,
             playerTransform: playerGameObject.transform,
-            motionConstants: motionConstants);
+            motionConstants: motionConstants
+        );
     }
 
     [UnityTest]
@@ -145,6 +153,7 @@ public class PlayerMovementTest {
         yield return new WaitForFixedUpdate();
 
         Assert.Greater(playerGameObject.transform.position.x, 0);
+        playerEffects.Received().CreateDashWind();
     }
 
     [UnityTest]

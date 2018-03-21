@@ -1,14 +1,19 @@
 using UnityEngine;
 using UnityEngine.TestTools;
 using NUnit.Framework;
+using NSubstitute;
 
 public class PlayerDashRobot {
     private PlayerMotionConstants motionConstants;
+    private IPlayerEffects playerEffects;
+    
     private PlayerDash playerDash;
 
     public PlayerDashRobot() {
         motionConstants = new PlayerMotionConstants();
-        playerDash = new PlayerDash(motionConstants);
+        playerEffects = Substitute.For<IPlayerEffects>();
+
+        playerDash = new PlayerDash(motionConstants, playerEffects);
     }
 
     public PlayerDashRobot DashLeft() {
@@ -56,6 +61,18 @@ public class PlayerDashRobot {
         return this;
     }
     
+    public PlayerDashRobot AssertDashEffectCreated() {
+        playerEffects.Received().CreateDashWind();
+
+        return this;
+    }
+
+    public PlayerDashRobot AssertDashEffectNotCreated() {
+        playerEffects.DidNotReceive().CreateDashWind();
+
+        return this;
+    }
+
     public PlayerDashRobot AssertDashingLeft() {
         Assert.AreEqual(-motionConstants.dashForce, playerDash.Force.x);
         

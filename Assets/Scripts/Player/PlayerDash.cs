@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerDash {
     private PlayerMotionConstants motionConstants;
+    private IPlayerEffects playerEffects;
 
     private bool dashButton;
     private bool dashingRight;
@@ -15,20 +16,27 @@ public class PlayerDash {
         }
     }
 
-    public PlayerDash(PlayerMotionConstants motionConstants) {
+    public PlayerDash(
+        PlayerMotionConstants motionConstants, 
+        IPlayerEffects playerEffects
+    ) {
         this.motionConstants = motionConstants;
+        this.playerEffects = playerEffects;
     }
 
-    public void CheckDash(bool grounded,
-    bool dashButton,
-    bool facingRight,
-    float deltaTime) {
+    public void CheckDash(
+        bool grounded,
+        bool dashButton,
+        bool facingRight,
+        float deltaTime
+    ) {
         switch (state) {
             case State.IDLE:
                 if (grounded && (DashButtonChanged(dashButton) && dashButton)) {
                     state = State.DASHING;
                     dashTime = motionConstants.dashDuration;
                     dashingRight = facingRight;
+                    playerEffects.CreateDashWind();
                 }
                 break;
             case State.DASHING:
@@ -56,7 +64,7 @@ public class PlayerDash {
     public Vector2 Force {
         get {
             if (isDashing) {
-                if(dashingRight) {
+                if (dashingRight) {
                     return Vector2.right * motionConstants.dashForce;
                 } else {
                     return Vector2.left * motionConstants.dashForce;
@@ -68,8 +76,8 @@ public class PlayerDash {
     }
 
     public bool ShouldApplyForce(Vector2 velocity) {
-        if(isDashing) {
-            if(Mathf.Abs(velocity.x) < motionConstants.dashMaxSpeed) {
+        if (isDashing) {
+            if (Mathf.Abs(velocity.x) < motionConstants.dashMaxSpeed) {
                 return true;
             }
         }
