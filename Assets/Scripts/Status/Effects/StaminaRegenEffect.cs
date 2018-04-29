@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class StaminaRegenEffect : IStatusEffect {
-    private const float REGEN_RATE = 5; 
     public void Apply(Stats stats, float timeDelta) {
-        var stamina = stats.stamina + (REGEN_RATE * timeDelta);
+        var stamina = stats.stamina + (stats.staminaRegenRate * timeDelta);
         stats.SetStamina(stamina);
     }
 
