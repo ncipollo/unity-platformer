@@ -8,5 +8,4 @@ public class PlayerStats {
     public int stamina;
     public int maxStamina;
     public int staminaRegen;
-
 }
