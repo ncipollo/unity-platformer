@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
     void Awake() {
         SetupComponents();
         SetupPlayerObjects();
+        SetupPlayerStatus();
     }
 
     void SetupComponents() {
@@ -36,6 +37,10 @@ public class PlayerController : MonoBehaviour {
             playerTransform: transform,
             motionConstants: motionConstants
         );
+    }
+
+    void SetupPlayerStatus() {
+        playerStatus.AddStatusEffect(new StaminaRegenEffect());
     }
 
     void Update() {
