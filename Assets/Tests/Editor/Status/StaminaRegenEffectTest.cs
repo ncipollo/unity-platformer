@@ -15,7 +15,6 @@ public class StaminaRegenEffectTest {
     public void Apply() {
         var stats = new Stats();
         stats.SetStamina(0);
-        Assert.AreEqual(0, stats.stamina);
 
         statusEffect.Apply(stats, 1.0f);
 
