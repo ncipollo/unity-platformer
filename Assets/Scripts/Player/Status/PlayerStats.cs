@@ -2,10 +2,8 @@ using UnityEngine;
 
 [System.Serializable]
 public class PlayerStats {
-    public int hp;
-    public int maxHp;
-    public int hpRegen;
-    public int stamina;
-    public int maxStamina;
-    public int staminaRegen;
+    public float hp = 100;
+    public float maxHp = 100;
+    public float stamina = 100;
+    public float maxStamina = 100;
 }
