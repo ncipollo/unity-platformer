@@ -1,6 +1,27 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 [System.Serializable]
 public class Status {
-    public Stats playerStats = new Stats();
+    public Stats stats = new Stats();
+
+    private List<IStatusEffect> statusEffects = new List<IStatusEffect>();
+
+    public void AddStatusEffect(IStatusEffect statusEffect) {
+        statusEffects.Add(statusEffect);
+    }
+
+    public void Update(float timeDelta) {
+        foreach (var effect in statusEffects) {
+            effect.Apply(stats, timeDelta);
+        }
+        PruneCompletedStatusEffects();
+    }
+
+    private void PruneCompletedStatusEffects() {
+        statusEffects = statusEffects
+        .Where(effect => !effect.Completed)
+        .ToList();
+    }
 }

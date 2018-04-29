@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour {
     void Update() {
         var jump = Input.GetAxis(playerControls.Jump) >= 1.0f;
         var dash = Input.GetButton(playerControls.Fire3);
+
+        playerStatus.Update(Time.deltaTime);
         
         playerMovement.CheckGrounded();
         playerMovement.CheckDash(dash, Time.deltaTime);
