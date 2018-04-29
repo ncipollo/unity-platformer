@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerStats {
+public class Stats {
     public float hp = 100;
     public float maxHp = 100;
     public float stamina = 100;

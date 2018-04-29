@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour {
     public PlayerMotionConstants motionConstants = new PlayerMotionConstants();
     public PlayerEffects playerEffects = new PlayerEffects();
     public string playerId = "P1";
-    public PlayerStatus playerStatus = new PlayerStatus();
+    public Status playerStatus = new Status();
 
     private Animator animator;
     private Rigidbody2D rigidBody;
