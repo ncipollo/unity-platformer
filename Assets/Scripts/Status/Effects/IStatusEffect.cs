@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface StatusEffect {
+public interface IStatusEffect {
     void Apply(Stats stats, float timeDelta);
 
     bool Completed { get; }
