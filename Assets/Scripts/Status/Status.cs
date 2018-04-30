@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 
 [System.Serializable]
 public class Status {
@@ -20,8 +19,6 @@ public class Status {
     }
 
     private void PruneCompletedStatusEffects() {
-        statusEffects = statusEffects
-        .Where(effect => !effect.Completed)
-        .ToList();
+        statusEffects.RemoveAll(effect => effect.Completed);
     }
 }

@@ -11,7 +11,7 @@ public class Stats {
     public void SetHP(float hp) {
         this.hp = Mathf.Clamp(hp, 0, maxHp);
     }
-    
+
     public void SetStamina(float stamina) {
         this.stamina = Mathf.Clamp(stamina, 0, maxStamina);
     }

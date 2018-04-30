@@ -28,6 +28,6 @@ public class StaminaRegenEffectTest {
 
     [Test]
     public void VisualEffects() {
-        Assert.AreEqual(0,statusEffect.VisualEffects.Count);
+        Assert.AreEqual(0, statusEffect.VisualEffects.Count);
     }
 }

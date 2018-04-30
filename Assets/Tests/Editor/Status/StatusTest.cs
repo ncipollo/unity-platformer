@@ -10,7 +10,7 @@ public class StatusTest {
     private Status status;
     private IStatusEffect completedEffect;
     private IStatusEffect ongoingEffect;
-    
+
 
     [SetUp]
     public void setUp() {
@@ -27,22 +27,14 @@ public class StatusTest {
     }
 
     [Test]
-    public void Update_AppliesOngoingEffectEachUpdate() {
-        status.AddStatusEffect(ongoingEffect);
-        
-        status.Update(TIME_DELTA);
-        status.Update(TIME_DELTA);
-
-        ongoingEffect.Received(2).Apply(status.stats, TIME_DELTA);
-    }
-
-    [Test]
-    public void Update_PrunesCompletedEffects() {
+    public void Update() {
         status.AddStatusEffect(completedEffect);
-        
+        status.AddStatusEffect(ongoingEffect);
+
         status.Update(TIME_DELTA);
         status.Update(TIME_DELTA);
 
         completedEffect.Received(1).Apply(status.stats, TIME_DELTA);
+        ongoingEffect.Received(2).Apply(status.stats, TIME_DELTA);
     }
 }
